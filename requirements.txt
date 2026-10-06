@@ -1,0 +1,6 @@
+fastapi==0.142.2
+uvicorn[standard]==0.54.0
+pydantic-ai-slim[openai]==2.46.0
+python-dotenv==1.2.3
+# test-only: live screenshot check (tests/app_check_screenshots.py)
+playwright==1.63.0

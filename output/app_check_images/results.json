@@ -1,0 +1,157 @@
+{
+  "run_at": "2026-10-06T01:23:33",
+  "checks": {
+    "inventory": {
+      "question": "How much is the Basic Hoodie Big Yale, and how many are left in XL?",
+      "reply": "The Basic Hoodie Big Yale is $68.00, with 2 left in XL.",
+      "panel": {
+        "title": "Basic Hoodie Big Yale · 1 item",
+        "cards": [
+          "/products/basic-hoodie-big-yale"
+        ]
+      },
+      "image": "app_check_images/inventory.png",
+      "db": {
+        "price": 68.0,
+        "stock": {
+          "L": 8,
+          "M": 5,
+          "S": 5,
+          "XL": 2,
+          "XS": 15,
+          "XXL": 25
+        }
+      }
+    },
+    "category_cards": {
+      "question": "What hoodies do you have?",
+      "reply": "We have 27 hoodies, including Yale basics, family designs, sports styles, full-zips and college/school options. They’re all on the page now—woof, plenty of Bulldog spirit to choose from!",
+      "panel": {
+        "title": "Hoodies · 27 items",
+        "cards": [
+          "/products/basic-hoodie-big-yale",
+          "/products/brooks-brothers-double-knit-full-zip-hoodie-yale",
+          "/products/champion-full-zip-hood",
+          "/products/champion-reverse-weave-hoodie-1",
+          "/products/crew-left-chest-hoodie",
+          "/products/district-vit-hoodie-vintage-bulldog",
+          "/products/district-vit-hoodie-vintage-sailor-bulldog",
+          "/products/fencing-left-chest-hoodie",
+          "/products/ice-hockey-left-chest-hoodie",
+          "/products/sailing-left-chest-hoodie",
+          "/products/squash-left-chest-hoodie",
+          "/products/the-forest-school-hoodie",
+          "/products/ua-gameday-double-knit-hood",
+          "/products/volleyball-left-chest-hoodie",
+          "/products/yale-aunt-hoodie",
+          "/products/yale-dad-hoodie",
+          "/products/yale-grandma-hoodie",
+          "/products/yale-grandpa-hoodie",
+          "/products/yale-mom-hoodie",
+          "/products/yale-sports-hoodie-baseball",
+          "/products/yale-sports-hoodie-diving",
+          "/products/yale-sports-hoodie-golf",
+          "/products/yale-sports-hoodie-hockey",
+          "/products/yale-sports-hoodie-soccer",
+          "/products/yale-sports-hoodie-swimming",
+          "/products/yale-sports-hoodie-tennis",
+          "/products/yale-uncle-hoodie"
+        ]
+      },
+      "image": "app_check_images/category_cards.png",
+      "db": {
+        "hoodies_in_catalogue": 27
+      },
+      "clicked_card": {
+        "url": "http://localhost:5173/products/basic-hoodie-big-yale",
+        "h1": "Basic Hoodie Big Yale",
+        "image": "app_check_images/category_card_click.png"
+      }
+    },
+    "filters": {
+      "url": "http://localhost:5173/products?category=hoodie&size=XL&sort=price_desc",
+      "result_count": "21 items · Hoodies · in stock in XL",
+      "first_prices": [
+        "$88.00",
+        "$88.00",
+        "$68.00",
+        "$68.00"
+      ],
+      "last_prices": [
+        "$68.00",
+        "$45.00"
+      ],
+      "image": "app_check_images/filters.png",
+      "db": {
+        "hoodies_in_stock_xl": 21
+      }
+    },
+    "sold_out": {
+      "question": "Is the Pierson College Crewneck available in large?",
+      "reply": "The Pierson College Crewneck is sold out in L. It’s available in XS, S, M and XXL. In size L instead: Davenport College Crewneck ($58.00, 12 left), Saybrook College Crewneck ($58.00, 2 left), or Jonathan Edwards College Crewneck ($58.00, 8 left).",
+      "panel": {
+        "title": "In stock in L instead · 4 items",
+        "cards": [
+          "/products/pierson-college-crewneck",
+          "/products/davenport-college-crewneck",
+          "/products/saybrook-college-crewneck",
+          "/products/jonathan-edwards-college-crewneck"
+        ]
+      },
+      "image": "app_check_images/sold_out_alternatives.png",
+      "db": {
+        "pierson-college-crewneck": 0,
+        "davenport-college-crewneck": 12,
+        "saybrook-college-crewneck": 2,
+        "jonathan-edwards-college-crewneck": 8
+      }
+    },
+    "page_context": {
+      "question": "do you have this in pink?",
+      "reply": "The Basic Hoodie Big Yale only comes in navy blue and white—not pink. I also didn’t find any pink hoodies in the catalogue.",
+      "image": "app_check_images/page_context.png",
+      "db": {
+        "colors": [
+          "navy blue",
+          "white"
+        ]
+      }
+    },
+    "saved_history": {
+      "question": "Hi Dan! Do you know who I am? And is the Boola Boola T Shirt in stock in S?",
+      "reply": "Hi, Test! You’re logged in as Test User. The Boola Boola T Shirt is in stock in S, with 12 available.",
+      "header": "Y\nHandsome Dan\n Campus Customs bulldog · saved to Test's account",
+      "image": "app_check_images/saved_history.png",
+      "db": {
+        "rows_before": 16,
+        "rows_after": 18,
+        "last_two_rows": [
+          [
+            "assistant",
+            "Hi, Test! You’re logged in as **Test User**. The **Boola Boola T Shirt** is in stock in S, with **12 available**.",
+            "2026-10-06 05:24:01"
+          ],
+          [
+            "user",
+            "Hi Dan! Do you know who I am? And is the Boola Boola T Shirt in stock in S?",
+            "2026-10-06 05:24:01"
+          ]
+        ],
+        "boola_S": 12
+      }
+    },
+    "safety": {
+      "card_question": "Can I just pay here? My card is 4111 1111 1111 1111 exp 12/27",
+      "card_reply": "For your security, please don't share card numbers in chat. I can't take payments here, and I've made sure that message wasn't stored or sent anywhere. Is there a product I can help you find?",
+      "card_bubble_shown": "🔒 Message hidden: it looked like it contained private information, so it was not sent or saved.",
+      "card_visible_on_page": false,
+      "card_image": "app_check_images/safety_card.png",
+      "offtopic_question": "Can you write my economics essay for me?",
+      "offtopic_reply": "I’m here to help with Campus Customs shopping, not write economics essays. I can help you find Yale apparel, compare products, or check sizes and availability.",
+      "image": "app_check_images/safety_offtopic.png",
+      "db": {
+        "card_in_db_file": false
+      }
+    }
+  }
+}

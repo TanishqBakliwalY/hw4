@@ -1,0 +1,33 @@
+# ---- Secrets: never commit ----
+.env
+.env.*
+!.env.example
+
+# ---- Local-only data pack (provided separately; see README) ----
+data/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+data.zip
+
+# ---- Python ----
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# ---- Node / front end ----
+node_modules/
+frontend/dist/
+*.log
+
+# ---- Audit-trail write temp / quarantined files (the trail itself IS committed) ----
+output/audit_trail.json.tmp
+output/audit_trail.corrupt-*.json
+
+# ---- OS / editors ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,275 @@
+/* =====================================================================
+   Problem 10: Campus Customs storefront design system (loaded after index.css)
+   Varsity display type, Yale blue + gold, felt pennants, stitched patches,
+   motion, and the Handsome Dan chat skin.
+   ===================================================================== */
+:root {
+  --font-display: 'Graduate', Georgia, serif; /* collegiate block letters */
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --gold: #b4975a;
+  --gold-light: #e9dcc0;
+  --felt: #00356b;
+  font-family: var(--font-body);
+}
+body {
+  /* faint "felt" dot texture so the page doesn't feel like a flat template */
+  background: radial-gradient(rgba(0, 53, 107, 0.035) 1px, transparent 1px) 0 0 / 14px 14px, var(--bg);
+}
+
+/* ---- Type hierarchy: display (varsity) > product names (serif) > UI (sans) ---- */
+h1,
+h2,
+.brand-text,
+.countdown-num,
+.category-tile {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+h1 { line-height: 1.08; }
+.section-head h2,
+.page-head h1 { position: relative; padding-bottom: 0.45rem; }
+.section-head h2::after,
+.page-head h1::after {
+  content: '';
+  position: absolute; left: 0; bottom: 0; width: 64px; height: 5px; border-radius: 3px;
+  background: linear-gradient(90deg, var(--navy) 0 60%, var(--gold) 60% 100%); /* blue + gold varsity stripe */
+}
+.card-title,
+.about-grid h3,
+.highlight h3 { font-family: Georgia, 'Times New Roman', serif; font-weight: 700; }
+.eyebrow { color: var(--gold); }
+
+/* ---- Brand + ticker ---- */
+.brand-mark {
+  font-family: var(--font-display); background: var(--navy); border: 2px solid var(--gold);
+  box-shadow: inset 0 0 0 2px var(--navy), inset 0 0 0 3px rgba(255, 255, 255, 0.35);
+}
+.brand-text { font-size: 1.25rem; }
+.announce { overflow: hidden; white-space: nowrap; padding: 0.42rem 0; }
+.ticker { display: inline-flex; animation: ticker 38s linear infinite; }
+.ticker span { padding-right: 2rem; }
+.ticker b { color: var(--gold); padding: 0 0.4rem; }
+.announce:hover .ticker { animation-play-state: paused; }
+@keyframes ticker { to { transform: translateX(-50%); } }
+
+/* ---- Auth forms ----
+   The First/Last name row used `1fr 1fr`; inputs have an intrinsic min width (~20ch), so `1fr`
+   columns couldn't shrink and the Last name field overflowed the card. minmax(0, 1fr) + full-width
+   inputs keep both fields inside the card at any width. */
+.auth-card .row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.auth-card label { min-width: 0; }
+.auth-card input { width: 100%; min-width: 0; }
+@media (max-width: 420px) {
+  .auth-card .row { grid-template-columns: 1fr; }
+}
+
+/* ---- Buttons ---- */
+/* Nav pill buttons ("Create Account"): the generic `.nav-links a { padding: 0.3rem 0 }` rule
+   removed their side padding, so the label touched/overflowed the pill edges. */
+.nav-links a.btn {
+  padding: 0.45rem 1.1rem;
+  white-space: nowrap;
+  border-bottom: 0;
+  line-height: 1.2;
+}
+.btn-gold { background: var(--gold); color: var(--navy-dark); }
+.btn-gold:hover { background: #c9ad72; }
+.btn-ghost,
+.btn-dan { display: inline-flex; align-items: center; gap: 0.5rem; }
+.btn-ghost { border: 0; cursor: pointer; font: inherit; font-weight: 600; }
+.btn-dan .dan,
+.btn-ghost .dan { border-radius: 50%; }
+
+/* ---- The Game hero ---- */
+.game-hero { position: relative; overflow: hidden; }
+.game-hero::before {
+  /* subtle diagonal varsity stripes */
+  content: ''; position: absolute; inset: 0; opacity: 0.07; pointer-events: none;
+  background: repeating-linear-gradient(-45deg, #fff 0 2px, transparent 2px 22px);
+}
+.game-hero-inner {
+  position: relative; display: grid; grid-template-columns: 1.35fr 1fr; gap: 2rem; align-items: center;
+  padding: 3.6rem 0 4.2rem;
+}
+.game-hero h1 { font-size: clamp(2.3rem, 5.2vw, 4rem); margin: 0.5rem 0 1rem; color: #fff; }
+.h1-accent { color: var(--gold-light); }
+.countdown { display: flex; gap: 0.6rem; margin: 1.4rem 0 0.4rem; }
+.countdown-cell {
+  background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 10px;
+  min-width: 72px; padding: 0.55rem 0.5rem 0.45rem; text-align: center;
+}
+.countdown-num { display: block; font-size: 2rem; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
+.countdown-label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-light); }
+.countdown-done { font-weight: 600; color: var(--gold-light); }
+.pennant-wrap { position: relative; height: 260px; }
+.pennant-pole {
+  position: absolute; left: 10%; top: 6%; width: 8px; height: 88%; border-radius: 4px;
+  background: linear-gradient(#e9dcc0, #8d7546);
+}
+.pennant {
+  position: absolute; left: calc(10% + 8px); top: 10%; width: 76%; height: 112px;
+  background: linear-gradient(90deg, #fff 0 14px, var(--felt) 14px); /* white felt hem */
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  display: flex; align-items: center; padding-left: 12%;
+  transform-origin: left center; animation: wave 3.2s ease-in-out infinite;
+}
+.pennant span {
+  font-family: var(--font-display); color: #fff; font-size: 2.6rem; letter-spacing: 0.08em;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
+}
+@keyframes wave {
+  0%, 100% { transform: skewY(0deg) scaleX(1); }
+  50% { transform: skewY(-3deg) scaleX(0.96); }
+}
+.hero-dan {
+  position: absolute; right: 2%; bottom: 0; border-radius: 50%; border: 4px solid var(--gold);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35); animation: bob 4s ease-in-out infinite;
+}
+@keyframes bob { 50% { transform: translateY(-8px) rotate(-3deg); } }
+@media (max-width: 820px) {
+  .game-hero-inner { grid-template-columns: 1fr; }
+  .pennant-wrap { height: 170px; }
+  .pennant span { font-size: 1.8rem; }
+  .hero-dan { width: 96px; height: 96px; }
+  .countdown-cell { min-width: 58px; }
+}
+
+/* ---- Felt pennants: Home category tiles ---- */
+.category-tile {
+  position: relative; border: 0; border-radius: 0; box-shadow: none; padding: 1.1rem 3.2rem 1.1rem 1.6rem;
+  background: linear-gradient(90deg, #fff 0 10px, var(--felt) 10px); color: #fff; font-size: 1.05rem;
+  clip-path: polygon(0 0, 100% 50%, 0 100%); min-height: 78px; transition: transform 0.25s;
+}
+.category-tile:nth-child(even) { background: linear-gradient(90deg, #fff 0 10px, var(--gold) 10px); color: var(--navy-dark); }
+.category-tile span { display: none; }
+.category-tile:hover { transform: rotate(-2deg) translateX(4px); box-shadow: none; }
+
+/* ---- Product cards: badges, size reveal, stitched price patch, staggered reveal ---- */
+.card-img { position: relative; overflow: hidden; }
+.card-img img { transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.card:hover .card-img img { transform: scale(1.06); }
+.card-badge {
+  position: absolute; top: 10px; left: 10px; z-index: 2; font-size: 0.72rem; font-weight: 700;
+  padding: 0.25rem 0.6rem; border-radius: 999px; letter-spacing: 0.02em;
+}
+.badge-out { background: #fdecea; color: var(--out); }
+.badge-low { background: #fff4e0; color: var(--low); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 6px rgba(178, 106, 0, 0.14); } }
+.card-sizes {
+  position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: center; gap: 0.3rem;
+  padding: 0.55rem; background: linear-gradient(transparent, rgba(0, 36, 74, 0.88));
+  transform: translateY(100%); transition: transform 0.25s ease;
+}
+.card:hover .card-sizes,
+.card:focus-visible .card-sizes { transform: translateY(0); }
+.card-sizes span {
+  font-size: 0.7rem; font-weight: 700; padding: 0.18rem 0.42rem; border-radius: 5px; background: #fff; color: var(--navy-dark);
+}
+.card-sizes span.out { background: transparent; color: rgba(255, 255, 255, 0.55); text-decoration: line-through; }
+.card-foot { display: flex; align-items: center; justify-content: space-between; }
+.card-price {
+  /* stitched varsity patch */
+  background: var(--navy); color: #fff; padding: 0.28rem 0.7rem; border-radius: 7px; font-size: 0.98rem;
+  outline: 1.5px dashed rgba(255, 255, 255, 0.6); outline-offset: -4px;
+}
+.card-cta { font-size: 0.82rem; font-weight: 600; color: var(--navy-light); opacity: 0; transform: translateX(-6px); transition: all 0.2s; }
+.card:hover .card-cta { opacity: 1; transform: none; }
+.reveal { opacity: 0; transform: translateY(18px); }
+.reveal.revealed {
+  opacity: 1; transform: none;
+  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.18s;
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.reveal.revealed:hover { transform: translateY(-5px); transition-delay: 0s; }
+
+/* ---- Product page: zoom + size picker ---- */
+/* (keeps index.css position: sticky -- a sticky box is already positioned for the zoom hint;
+   overriding it with `relative` while `top: 120px` is set pushed the image 120px down) */
+.detail-img { overflow: hidden; cursor: zoom-in; }
+.detail-img img { transition: transform 0.2s ease; }
+.detail-img.zooming img { transform: scale(1.9); }
+.zoom-hint {
+  position: absolute; right: 14px; bottom: 12px; font-size: 0.75rem; color: var(--muted);
+  background: rgba(255, 255, 255, 0.85); padding: 0.2rem 0.55rem; border-radius: 999px; transition: opacity 0.2s;
+}
+.detail-img.zooming .zoom-hint { opacity: 0; }
+.detail-info h1 { font-family: var(--font-display); font-weight: 400; }
+.detail-price { display: inline-block; outline: 2px dashed rgba(0, 53, 107, 0.35); outline-offset: 4px; border-radius: 6px; padding: 0 0.3rem; }
+.size-picker { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.45rem; max-width: 460px; }
+.size-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 0.1rem; padding: 0.55rem 0.2rem; border-radius: 10px;
+  border: 2px solid var(--border); background: #fff; cursor: pointer; font: inherit; color: var(--text); transition: all 0.15s;
+}
+.size-btn:hover { border-color: var(--navy-light); transform: translateY(-2px); }
+.size-btn.selected { border-color: var(--navy); background: var(--navy); color: #fff; }
+.size-name { font-weight: 700; font-size: 1rem; }
+.size-stock { font-size: 0.66rem; color: var(--muted); }
+.size-btn.selected .size-stock { color: #dbe5f1; }
+.size-btn.low .size-stock { color: var(--low); font-weight: 600; }
+.size-btn.out { background: repeating-linear-gradient(-45deg, #fafafa 0 6px, #f1f1f1 6px 12px); }
+.size-btn.out .size-name { text-decoration: line-through; color: #9aa3ae; }
+.size-btn.out .size-stock { color: var(--out); }
+.size-btn.out.selected { background: #fdecea; border-color: var(--out); }
+.size-status { margin-top: 0.7rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; font-size: 0.95rem; }
+.size-status.ok { color: var(--ok); }
+.size-status.low { color: var(--low); }
+.size-status.out { color: var(--out); }
+.size-status .ask-chip { display: inline-flex; align-items: center; gap: 0.35rem; }
+.pulse-dot {
+  display: inline-block; width: 9px; height: 9px; margin-left: 0.45rem; border-radius: 50%; background: var(--low);
+  animation: pulse-dot 1.4s ease-in-out infinite;
+}
+@keyframes pulse-dot { 50% { transform: scale(1.5); opacity: 0.5; } }
+
+/* ---- Handsome Dan chat skin ---- */
+.dan { flex-shrink: 0; }
+.chat-launcher.dan-launcher {
+  width: 68px; height: 68px; padding: 0; overflow: hidden; background: var(--gold);
+  border: 3px solid var(--gold); animation: peek 5s ease-in-out infinite;
+}
+.chat-launcher.dan-launcher .dan { width: 100%; height: 100%; display: block; }
+@keyframes peek {
+  0%, 80%, 100% { transform: translateY(0) rotate(0); }
+  86% { transform: translateY(-6px) rotate(-8deg); }
+  92% { transform: translateY(-2px) rotate(6deg); }
+}
+.dan-peek {
+  position: relative; max-width: 230px; background: #fff; color: var(--text); border-radius: 14px 14px 4px 14px;
+  padding: 0.7rem 2rem 0.7rem 0.9rem; box-shadow: var(--shadow-lg); font-size: 0.86rem; animation: pop 0.25s ease-out;
+  border: 2px solid var(--gold-light);
+}
+.dan-peek b { color: var(--navy); }
+.dan-peek-close { position: absolute; top: 4px; right: 6px; background: none; border: 0; font-size: 1rem; color: var(--muted); cursor: pointer; }
+.chat-header { background: linear-gradient(120deg, var(--navy-dark), var(--navy)); border-bottom: 3px solid var(--gold); }
+.chat-header .chat-ident { display: flex; flex-direction: row; align-items: center; gap: 0.65rem; }
+.chat-ident > div { display: flex; flex-direction: column; }
+.chat-ident strong { font-family: var(--font-display); font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; }
+.chat-new { white-space: nowrap; }
+.chat-header-dan { border-radius: 50%; border: 2px solid var(--gold); background: #fff; }
+.online-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #4ade80; margin-right: 0.25rem; vertical-align: middle; }
+.chat-messages { background: radial-gradient(rgba(0, 53, 107, 0.05) 1px, transparent 1px) 0 0 / 12px 12px, #f4f6f9; }
+.bubble-row { display: flex; align-items: flex-end; gap: 0.4rem; max-width: 92%; }
+.chat-turn.user .bubble-row { justify-content: flex-end; max-width: 100%; }
+.bubble-row .bubble { max-width: 100%; }
+.bubble-dan { border-radius: 50%; border: 1.5px solid var(--gold-light); background: #fff; }
+.bubble.assistant { border-left: 3px solid var(--gold); }
+.bubble.user { background: linear-gradient(135deg, var(--navy), var(--navy-light)); }
+.typing.paws { gap: 0.25rem; padding: 0.45rem 0.7rem; }
+.typing.paws span { width: auto; height: auto; background: none; font-size: 0.95rem; animation: paw 1.2s infinite; opacity: 0.25; }
+.typing.paws span:nth-child(2) { animation-delay: 0.2s; }
+.typing.paws span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes paw {
+  0%, 70%, 100% { opacity: 0.25; transform: translateY(0); }
+  35% { opacity: 1; transform: translateY(-3px) rotate(-12deg); }
+}
+.chat-turn.assistant .chat-matches-chip { margin-left: 34px; }
+
+/* ---- Respect reduced-motion preferences ---- */
+@media (prefers-reduced-motion: reduce) {
+  .ticker, .pennant, .hero-dan, .chat-launcher.dan-launcher, .badge-low, .pulse-dot, .typing.paws span { animation: none !important; }
+  .typing.paws span { opacity: 1; }
+  .reveal { opacity: 1; transform: none; }
+  .card:hover .card-img img,
+  .detail-img.zooming img { transform: none; }
+}

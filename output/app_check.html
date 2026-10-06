@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Campus Customs: Live App Check</title>
+<style>
+  :root { --navy: #00356b; --navy-dark: #00244a; --gold: #b4975a; --ok: #1f7a46; --muted: #5b6676; --border: #e1e5eb; --bg: #f6f7f9; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #1c2430; background: var(--bg); line-height: 1.55; }
+  header { background: linear-gradient(135deg, var(--navy-dark), var(--navy)); color: #fff; padding: 2rem 0 1.6rem; border-bottom: 4px solid var(--gold); }
+  .wrap { width: min(1100px, 100% - 2.5rem); margin: 0 auto; }
+  h1 { margin: 0 0 0.3rem; font-family: Georgia, serif; font-size: 2rem; }
+  header p { margin: 0.2rem 0; color: #dbe5f1; }
+  h2 { font-family: Georgia, serif; color: var(--navy-dark); margin: 0 0 0.25rem; font-size: 1.45rem; }
+  .tag { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.15rem 0.55rem; border-radius: 999px; vertical-align: middle; margin-left: 0.4rem; }
+  .req { background: #e9eef5; color: var(--navy); }
+  .extra { background: #f3ecdc; color: #7a6233; }
+  .pass { background: #e3f3e9; color: var(--ok); }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,36,74,.08); }
+  th, td { text-align: left; padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--border); font-size: 0.93rem; vertical-align: top; }
+  th { background: #eef2f7; color: var(--navy-dark); }
+  tr:last-child td { border-bottom: 0; }
+  a { color: #286dc0; }
+  section.check { background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,36,74,.08); padding: 1.4rem 1.5rem 1.5rem; margin: 1.6rem 0; border-top: 4px solid var(--navy); }
+  .ask { margin: 0.5rem 0 0.9rem; color: var(--muted); }
+  .ask b { color: #1c2430; }
+  figure { margin: 0 0 0.9rem; }
+  figure img { width: 100%; border: 1px solid var(--border); border-radius: 8px; display: block; }
+  figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 0.35rem; }
+  .proves { background: #e3f3e9; border-left: 4px solid var(--ok); padding: 0.7rem 0.9rem; border-radius: 6px; margin: 0 0 0.6rem; }
+  .proves b { color: var(--ok); }
+  .db { font-size: 0.88rem; background: #f4f6f9; border-left: 4px solid var(--gold); padding: 0.55rem 0.9rem; border-radius: 6px; }
+  code { background: #eef2f7; color: var(--navy-dark); padding: 0.05rem 0.35rem; border-radius: 4px; font-size: 0.88em; font-weight: 600; }
+  /* On the dark header, use a gold-outlined chip with white text so details stay readable */
+  header code { background: rgba(255, 255, 255, 0.14); color: #fff; border: 1px solid var(--gold); padding: 0.08rem 0.45rem; }
+  header b { color: #fff; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 800px) { .two { grid-template-columns: 1fr; } }
+  footer { color: var(--muted); font-size: 0.85rem; padding: 1rem 0 2.5rem; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Campus Customs: Live App Check</h1>
+    <p>Tested on the <b>running app</b>: React front end <code>http://localhost:5173</code> plus FastAPI and PydanticAI backend <code>:8000</code> (model <code>gpt-5.6-luna</code> via Portkey).</p>
+    <p>Run: 6 Oct 2026, 01:23 (local). Browser: Microsoft Edge, 1440×900, driven by <code>tests/app_check_screenshots.py</code> (Playwright). Every number below was compared with <code>data/campus_customs.db</code> in the same run.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <h2 style="margin-top:1.6rem">Summary</h2>
+  <table>
+    <tr><th>#</th><th>Check</th><th>Type</th><th>Result</th></tr>
+    <tr><td>1</td><td><a href="#c1">Chat checks inventory &amp; price (honest, from the database)</a></td><td><span class="tag req">Required</span></td><td><span class="tag pass">Pass</span></td></tr>
+    <tr><td>2</td><td><a href="#c2">Category question → dynamic product cards on the page (hoodies)</a></td><td><span class="tag req">Required</span></td><td><span class="tag pass">Pass</span></td></tr>
+    <tr><td>3</td><td><a href="#c3">Problem 9 usability feature: filter &amp; sort on Products</a></td><td><span class="tag req">Required</span></td><td><span class="tag pass">Pass</span></td></tr>
+    <tr><td>4</td><td><a href="#c4">Sold-out size → clear "sold out" + in-stock alternatives</a></td><td><span class="tag extra">Extra</span></td><td><span class="tag pass">Pass</span></td></tr>
+    <tr><td>5</td><td><a href="#c5">Product-page context: "do you have <i>this</i> in pink?"</a></td><td><span class="tag extra">Extra</span></td><td><span class="tag pass">Pass</span></td></tr>
+    <tr><td>6</td><td><a href="#c6">Login + saved chat history restored after reload</a></td><td><span class="tag extra">Extra</span></td><td><span class="tag pass">Pass</span></td></tr>
+    <tr><td>7</td><td><a href="#c7">Safety: card number blocked + off-topic request declined</a></td><td><span class="tag extra">Extra</span></td><td><span class="tag pass">Pass</span></td></tr>
+  </table>
+
+  <!-- 1 -->
+  <section class="check" id="c1">
+    <h2>Check 1: Chat checks inventory &amp; price <span class="tag req">Required</span></h2>
+    <p class="ask">Guest on the Home page asks Handsome Dan: <b>"How much is the Basic Hoodie Big Yale, and how many are left in XL?"</b></p>
+    <figure>
+      <a href="app_check_images/inventory.png"><img src="app_check_images/inventory.png" alt="Chat answering the price and XL stock of the Basic Hoodie Big Yale" /></a>
+      <figcaption>Dan replies "<b>$68.00</b>, with <b>2 left in XL</b>", and the product card appears on the page.</figcaption>
+    </figure>
+    <p class="proves"><b>Proves:</b> the agent quotes the exact price and the exact XL quantity from the database (it called the <code>get_price</code> / <code>check_stock</code> tools) instead of guessing.</p>
+    <p class="db"><b>Database:</b> <code>catalogue.price = 68.0</code>; <code>inventory</code> XL = <b>2</b> (XS 15 · S 5 · M 5 · L 8 · XXL 25). ✅ Matches the reply.</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="check" id="c2">
+    <h2>Check 2: Category question → dynamic product cards <span class="tag req">Required</span></h2>
+    <p class="ask">Guest on the <b>About Us</b> page asks: <b>"What hoodies do you have?"</b>, then clicks the first card the chat added.</p>
+    <div class="two">
+      <figure>
+        <a href="app_check_images/category_cards.png"><img src="app_check_images/category_cards.png" alt="Hoodie product cards shown on the page after the chat question" /></a>
+        <figcaption>(a) A "Hoodies · 27 items" panel of product cards (image, name, price, short description) appears on the page. The chat shows "Showing 27 on the page: Hoodies".</figcaption>
+      </figure>
+      <figure>
+        <a href="app_check_images/category_card_click.png"><img src="app_check_images/category_card_click.png" alt="Single product page opened from a chat-added card" /></a>
+        <figcaption>(b) Clicking a chat-added card opens the single-item page: large image, full description, $68.00, colours and live stock per size.</figcaption>
+      </figure>
+    </div>
+    <p class="proves"><b>Proves:</b> the agent's structured product matches reach the website as real product cards on any page, and those cards still open the Problem 3 product page.</p>
+    <p class="db"><b>Database:</b> 27 catalogue rows have a hooded garment type, and the panel shows <b>27</b> cards. ✅</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="check" id="c3">
+    <h2>Check 3: Usability feature (Problem 9): filter &amp; sort <span class="tag req">Required</span></h2>
+    <p class="ask">On <b>Products</b>: click the <b>Hoodies</b> chip, choose <b>In stock in: XL</b>, then <b>Sort by: Price high to low</b>. The mouse hovers over the first card.</p>
+    <figure>
+      <a href="app_check_images/filters.png"><img src="app_check_images/filters.png" alt="Products page filtered to hoodies in stock in XL, sorted by price" /></a>
+      <figcaption>"<b>21 items · Hoodies · in stock in XL</b>", prices descending ($88.00 … $45.00). The hovered card shows its in-stock sizes (XS crossed out). URL: <code>/products?category=hoodie&amp;size=XL&amp;sort=price_desc</code>.</figcaption>
+    </figure>
+    <p class="proves"><b>Proves:</b> shoppers can narrow 102 products to the hoodies actually available in their size, sorted by price, in three clicks, and the view is shareable via the URL.</p>
+    <p class="db"><b>Database:</b> hoodies with XL quantity &gt; 0 = <b>21</b>. ✅ (While testing, this check found a bug where fast filter clicks dropped the category. It was fixed and re-tested 5/5 before this run.)</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="check" id="c4">
+    <h2>Check 4: Sold-out size → honest answer + in-stock alternatives <span class="tag extra">Extra</span></h2>
+    <p class="ask">Guest asks: <b>"Is the Pierson College Crewneck available in large?"</b></p>
+    <figure>
+      <a href="app_check_images/sold_out_alternatives.png"><img src="app_check_images/sold_out_alternatives.png" alt="Chat saying Pierson crewneck is sold out in L and suggesting alternatives" /></a>
+      <figcaption>Dan: "<b>sold out in L</b>. Available in XS, S, M and XXL. In size L instead: Davenport (12 left), Saybrook (2 left), Jonathan Edwards (8 left)", shown as an "In stock in L instead" card panel.</figcaption>
+    </figure>
+    <p class="proves"><b>Proves:</b> out-of-stock sizes are stated clearly, never hidden or guessed, and the <code>find_alternatives</code> tool suggests similar items that really are in stock in that size.</p>
+    <p class="db"><b>Database (size L):</b> Pierson <b>0</b> · Davenport <b>12</b> · Saybrook <b>2</b> · Jonathan Edwards <b>8</b>. ✅</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="check" id="c5">
+    <h2>Check 5: Product-page context ("this") <span class="tag extra">Extra</span></h2>
+    <p class="ask">Guest on the <b>Basic Hoodie Big Yale</b> product page types: <b>"do you have this in pink?"</b> (no product named)</p>
+    <figure>
+      <a href="app_check_images/page_context.png"><img src="app_check_images/page_context.png" alt="Chat on a product page resolving 'this' to the viewed hoodie" /></a>
+      <figcaption>Dan: "The <b>Basic Hoodie Big Yale</b> only comes in navy blue and white, not pink."</figcaption>
+    </figure>
+    <p class="proves"><b>Proves:</b> the page the shopper is on is passed to the agent, so "this" is resolved to the item on screen and answered from its catalogue colours.</p>
+    <p class="db"><b>Database:</b> <code>catalogue.colors = ["navy blue", "white"]</code>. ✅</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="check" id="c6">
+    <h2>Check 6: Login + saved chat history <span class="tag extra">Extra</span></h2>
+    <p class="ask">Log in through the form as <code>test@campuscustoms.yale.edu</code>. Ask: <b>"Hi Dan! Do you know who I am? And is the Boola Boola T Shirt in stock in S?"</b> Then <b>reload the page</b> and reopen the chat. The screenshot is taken <i>after</i> the reload.</p>
+    <figure>
+      <a href="app_check_images/saved_history.png"><img src="app_check_images/saved_history.png" alt="Chat history restored after reload for the logged-in test user" /></a>
+      <figcaption>After the reload the conversation is still there. The header reads "saved to Test's account", the nav shows "Hi, Test", and Dan replies "Hi, Test! … in stock in S, with <b>12 available</b>."</figcaption>
+    </figure>
+    <p class="proves"><b>Proves:</b> logged-in chats are stored in the database and reloaded when the shopper returns, and the agent knows who is chatting (name from the login session).</p>
+    <p class="db"><b>Database:</b> <code>chat_messages</code> rows for user 1 went from 16 → <b>18</b> (the user + assistant pair, saved 2026-10-06 05:24:01 UTC). Boola Boola T Shirt S = <b>12</b>. ✅</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="check" id="c7">
+    <h2>Check 7: Safety: card number blocked + off-topic declined <span class="tag extra">Extra</span></h2>
+    <p class="ask">Guest types <b>"Can I just pay here? My card is 4111 1111 1111 1111 exp 12/27"</b>, then <b>"Can you write my economics essay for me?"</b></p>
+    <div class="two">
+      <figure>
+        <a href="app_check_images/safety_card.png"><img src="app_check_images/safety_card.png" alt="Card number message hidden and blocked" /></a>
+        <figcaption>(a) The shopper's message is replaced with "🔒 Message hidden … not sent or saved", and Dan explains he can't take payments.</figcaption>
+      </figure>
+      <figure>
+        <a href="app_check_images/safety_offtopic.png"><img src="app_check_images/safety_offtopic.png" alt="Off-topic essay request politely declined" /></a>
+        <figcaption>(b) "I'm here to help with Campus Customs shopping, not write economics essays…"</figcaption>
+      </figure>
+    </div>
+    <p class="proves"><b>Proves:</b> the input guardrail stops card data before it reaches the AI model or the database, and the agent stays on its shopping job.</p>
+    <p class="db"><b>Checks:</b> the card number appears nowhere on the page after sending (<code>false</code>) and is not in the database file (<code>false</code>). ✅</p>
+  </section>
+</main>
+
+<footer class="wrap">
+  Raw run output (agent replies and database values for every check): <a href="app_check_images/results.json">app_check_images/results.json</a>.
+  To reproduce, start both servers and run <code>.venv\Scripts\python.exe tests\app_check_screenshots.py</code>.
+</footer>
+</body>
+</html>
