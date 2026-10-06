@@ -235,4 +235,11 @@ This file logs the prompts I typed to the AI coding assistant while working on H
 - `git init`, staged 66 files, and confirmed no `.env`, database, images, `.venv` or `node_modules` are tracked. A secret scan of every tracked file against the real `.env` values found no API keys (the only match was the public `yale.edu` domain in the test email).
 - What I need to do: create an empty public GitHub repo and share its URL, then approve the push (Git Credential Manager sign-in).
 
+**Prompt 2:**
+> https://github.com/TanishqBakliwalY/hw4
+
+**What was lacking after Prompt 1:** the public GitHub repo had to be created from my own account, so I created it and shared the URL. The assistant then added it as `origin` and pushed `main` (after I approved the GitHub sign-in).
+
+**Result:** pushed to **https://github.com/TanishqBakliwalY/hw4**. An anonymous clone (no credentials) succeeded with all 66 files, the four agent files in `backend/`, and no `.env`, database, product images, `.venv` or `node_modules`.
+
 ---
